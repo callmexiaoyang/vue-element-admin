@@ -1,5 +1,5 @@
 import axios from 'axios'
-
+import { Message } from 'element-ui'
 
 // create an axios instance
 const service = axios.create({
@@ -13,14 +13,21 @@ service.interceptors.request.use(
     return config
   },
   error => {
-  return Promise.reject(error)
+    return Promise.reject(error)
   }
 )
 
 // response interceptor
 service.interceptors.response.use(
   response => {
-    return response
+    const { data, success, message } = response.data
+    if (success) {
+      return data
+    } else {
+      Message.error(message)
+      return Promise.reject(new Error(message))
+    }
+    // return response
   },
   error => {
     return Promise.reject(error)

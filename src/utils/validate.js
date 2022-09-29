@@ -14,9 +14,8 @@ export function isExternal(path) {
  * @param {string} str
  * @returns {Boolean}
  */
-export function validUsername(str) {
-  const valid_map = ['admin', 'editor']
-  return valid_map.indexOf(str.trim()) >= 0
+export function validateMobile(rule, value, callback) {
+  /^1[3-9]\d{9}$/.test(value) ? callback() : callback(new Error('手机格式有误'))
 }
 
 /**
