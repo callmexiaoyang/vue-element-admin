@@ -19,6 +19,18 @@ export function validateMobile(rule, value, callback) {
 }
 
 /**
+ * 校验手机号
+*/
+export function validMobile(str) {
+  console.log(str)
+  return /^1[3-9]\d{9}$/.test(str) // 校验手机号
+}
+// export function validMobile(rule, value, callback) {
+//   console.log(value)
+//   return /^1[3-9]\d{9}$/.test(value) ? callback() : callback(new Error('手机号格式不正确')) // 校验手机号
+// }
+
+/**
  * @param {string} url
  * @returns {Boolean}
  */

@@ -4,30 +4,26 @@ const state = {
   token: getToken()
 }
 const mutations = {
-  getToken(state) {
-    // 从本地拿token
-    state.token = getToken()
+  // 同步修改token
+  setToken(state, token) {
+    // 赋值
+    token = state.token
+    // 更新后的token存本地
+    setToken(token)
   },
-  setToken(state) {
-    // 给本地存token
-    setToken(state.token)
-  },
-  removeToken(state) {
-    // 删除本地token
-    removeToken()
-    // 清空vuex
+  // 删除token
+  removeToken(state, token) {
     state.token = null
+    removeToken()
   }
 }
 const actions = {
   async login(context, data) {
-    // 调接口
     const result = await login(data)
-    // 调用存token同步函数
+    // context.setToken(result)
     context.commit('setToken', result)
   }
 }
-
 export default {
   namespaced: true,
   state,

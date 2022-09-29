@@ -29,7 +29,9 @@ service.interceptors.response.use(
     }
     // return response
   },
+  // 接口没调通
   error => {
+    Message.error(error.message)
     return Promise.reject(error)
   }
 )
