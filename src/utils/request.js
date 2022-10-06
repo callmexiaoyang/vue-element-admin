@@ -1,5 +1,10 @@
 import axios from 'axios'
 import { Message } from 'element-ui'
+import store from '@/store'
+import { getTimeStamp } from './auth'
+import router from '@/router'
+// 设置token超时时间
+const timeExceed = 2
 
 // create an axios instance
 const service = axios.create({
@@ -10,6 +15,17 @@ const service = axios.create({
 // request interceptor
 service.interceptors.request.use(
   config => {
+    if (store.getters.token) {
+      // token超时，登出
+      if ((Date.now() - getTimeStamp()) / 1000 > timeExceed) {
+        store.dispatch('user/logout')
+        // 跳转登录页
+        router.push('/login')
+        // 抛出异常
+        return Promise.reject(new Error('token超时了！'))
+      }
+      config.headers['Authorization'] = `Bearer ${store.getters.token}`
+    }
     return config
   },
   error => {
@@ -31,7 +47,13 @@ service.interceptors.response.use(
   },
   // 接口没调通
   error => {
-    Message.error(error.message)
+    if (error.responese && error.responese.data && error.responese.data.code === 10002) {
+      store.dispatch('user/logout')
+      // 跳转登录页
+      router.push('/login')
+    } else {
+      Message.error(error.message)
+    }
     return Promise.reject(error)
   }
 )

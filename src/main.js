@@ -19,7 +19,11 @@ import './permission' // permission control
 import './utils/error-log' // error log
 
 import * as filters from './filters' // global filters
+import * as directives from './directive'
 
+Object.keys(directives).forEach(key => {
+  Vue.directive(key, directives[key])
+})
 /**
  * If you don't want to use mock-server
  * you want to use MockJs for mock api
