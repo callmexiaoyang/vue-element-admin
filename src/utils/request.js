@@ -4,7 +4,7 @@ import store from '@/store'
 import { getTimeStamp } from './auth'
 import router from '@/router'
 // 设置token超时时间
-const timeExceed = 2
+const timeExceed = 2 * 60 * 60
 
 // create an axios instance
 const service = axios.create({
