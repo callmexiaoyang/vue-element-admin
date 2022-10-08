@@ -13,6 +13,7 @@ router.beforeEach(async function(to, from, next) {
       if (!store.getters.useInfo) {
         await store.dispatch('user/getUserInfo')
       }
+      console.log(to.path)
       next()
     }
   } else {

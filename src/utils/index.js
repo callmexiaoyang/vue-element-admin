@@ -355,3 +355,20 @@ export function removeClass(ele, cls) {
     ele.className = ele.className.replace(reg, ' ')
   }
 }
+
+/**
+** @params Array 数组转树形
+** @params String 筛选条件-----需要return处理后的树形数据
+**/
+export function arrayTransTree(arr, pid) {
+  // 先找pid为空，作为一级节点
+  var treeArr = []
+  arr.forEach(item => {
+    if (item.pid === pid) {
+      item.children = arrayTransTree(arr, item.id)
+      treeArr.push(item)
+    }
+  })
+  // 再遍历 把一级节点的id作为条件，找到id等于pid的对象，作为二级节点
+  return treeArr
+}
